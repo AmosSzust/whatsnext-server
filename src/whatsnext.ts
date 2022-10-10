@@ -51,7 +51,7 @@ if (process.env.DB_USER == null) {
 process
     .on("unhandledRejection", async (reason, p) => {
         await pgClient.handleError(new AppError(true, `${reason}: ${p}`, 500));
-        console.log(new Date().toISOString() + ": Exited via unhandledRejection");;
+        console.log(new Date().toISOString() + ": Exited via unhandledRejection");
         process.exit(1);
     })
     .on("uncaughtException", async (err) => {
