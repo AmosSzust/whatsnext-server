@@ -1,0 +1,12 @@
+JWT_SECRET=value
+EMAIL_PASSWORD=value
+EMAIL_USER=value
+EMAIL_SERVICE=value
+DB_USER=value
+DB_HOST=value
+DB_DATABASE=whatsnext
+DB_PASSWORD=value
+DB_PORT=5432
+DB_SSL=false
+PRIV_KEY_PATH=/etc/letsencrypt/live/stockdiv.com/privkey.pem
+FULL_CHAIN_PATH=/etc/letsencrypt/live/stockdiv.com/fullchain.pem
