@@ -15,7 +15,7 @@ You have a file called **.env** with several variables for you to define, for ex
 ## Contribution
 The server side is developed using NodeJS (Typescript).
 
-Feel free to contribute in any way you like. If you have an idea but are familiar only with the client/server side, please share this idea with me. Following are some ideas to begin with:
+Feel free to contribute in any way you like. If you have an idea but you're only familiar with the client or server side, please share this idea with me and we'll coordinate the development together. Following are some ideas to start with:
 1. Search based on age, not years.
 2. When contacting someone, add the number of shared events between them.
 3. If contacting the same person, just update the contact_when instead of inserting a new row to the table.
