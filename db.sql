@@ -236,6 +236,7 @@ INSERT INTO public.life_events (id, event_name, description, icon_name) OVERRIDI
 INSERT INTO public.life_events (id, event_name, description, icon_name) OVERRIDING SYSTEM VALUE VALUES (15, 'Graduation', 'Graduated school/college/etc...', 'school');
 INSERT INTO public.life_events (id, event_name, description, icon_name) OVERRIDING SYSTEM VALUE VALUES (14, 'Grief', 'Lost someone you care', 'sentiment_dissatisfied');
 INSERT INTO public.life_events (id, event_name, description, icon_name) OVERRIDING SYSTEM VALUE VALUES (16, 'Army', 'Army recruitment or discharged', 'military_tech');
+INSERT INTO public.life_events (id, event_name, description, icon_name) OVERRIDING SYSTEM VALUE VALUES (17, 'Health', 'Health related issues', 'sick');
 
 
 --
