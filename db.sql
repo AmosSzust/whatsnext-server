@@ -223,9 +223,9 @@ ALTER TABLE public.users_life_events ALTER COLUMN id ADD GENERATED ALWAYS AS IDE
 
 INSERT INTO public.life_events (id, event_name, description, icon_name) OVERRIDING SYSTEM VALUE VALUES (1, 'Birth', 'The day you were born', 'celebration');
 INSERT INTO public.life_events (id, event_name, description, icon_name) OVERRIDING SYSTEM VALUE VALUES (2, 'Pet', 'Adopted/Lost a pet', 'pets');
-INSERT INTO public.life_events (id, event_name, description, icon_name) OVERRIDING SYSTEM VALUE VALUES (3, 'Child Birth', 'A new baby born', 'crib');
-INSERT INTO public.life_events (id, event_name, description, icon_name) OVERRIDING SYSTEM VALUE VALUES (4, 'Child Adoption', 'You adopted a child', 'child_care');
-INSERT INTO public.life_events (id, event_name, description, icon_name) OVERRIDING SYSTEM VALUE VALUES (5, 'Breakup', 'A separation in your romantic life', 'heart_broken');
+INSERT INTO public.life_events (id, event_name, description, icon_name) OVERRIDING SYSTEM VALUE VALUES (3, 'Child', 'A new baby born/adoption', 'crib');
+INSERT INTO public.life_events (id, event_name, description, icon_name) OVERRIDING SYSTEM VALUE VALUES (4, 'Sport', 'A great achievement in sport', 'emoji_events');
+INSERT INTO public.life_events (id, event_name, description, icon_name) OVERRIDING SYSTEM VALUE VALUES (5, 'Entrepreneurship', 'A big dream you started/accomplished', 'handshake');
 INSERT INTO public.life_events (id, event_name, description, icon_name) OVERRIDING SYSTEM VALUE VALUES (6, 'Home/House', 'Bought/Sold your home/house', 'home');
 INSERT INTO public.life_events (id, event_name, description, icon_name) OVERRIDING SYSTEM VALUE VALUES (7, 'Crime', 'Committed a crime', 'gavel');
 INSERT INTO public.life_events (id, event_name, description, icon_name) OVERRIDING SYSTEM VALUE VALUES (8, 'Marriage/Wedding', 'You got married, Hooray!', 'volunteer_activism');
@@ -233,11 +233,10 @@ INSERT INTO public.life_events (id, event_name, description, icon_name) OVERRIDI
 INSERT INTO public.life_events (id, event_name, description, icon_name) OVERRIDING SYSTEM VALUE VALUES (10, 'Engagement', 'You propose or was proposed', 'diamond');
 INSERT INTO public.life_events (id, event_name, description, icon_name) OVERRIDING SYSTEM VALUE VALUES (11, 'Job', 'Started a new job/Got fired', 'work');
 INSERT INTO public.life_events (id, event_name, description, icon_name) OVERRIDING SYSTEM VALUE VALUES (12, 'Travel', 'Went to see cool places', 'map');
+INSERT INTO public.life_events (id, event_name, description, icon_name) OVERRIDING SYSTEM VALUE VALUES (14, 'Grief', 'Lost someone you care about', 'sentiment_dissatisfied');
 INSERT INTO public.life_events (id, event_name, description, icon_name) OVERRIDING SYSTEM VALUE VALUES (15, 'Graduation', 'Graduated school/college/etc...', 'school');
-INSERT INTO public.life_events (id, event_name, description, icon_name) OVERRIDING SYSTEM VALUE VALUES (14, 'Grief', 'Lost someone you care', 'sentiment_dissatisfied');
 INSERT INTO public.life_events (id, event_name, description, icon_name) OVERRIDING SYSTEM VALUE VALUES (16, 'Army', 'Army recruitment or discharged', 'military_tech');
 INSERT INTO public.life_events (id, event_name, description, icon_name) OVERRIDING SYSTEM VALUE VALUES (17, 'Health', 'Health related issues', 'sick');
-
 
 --
 -- TOC entry 3333 (class 0 OID 16395)
