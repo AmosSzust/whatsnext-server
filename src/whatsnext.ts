@@ -26,7 +26,7 @@ app.use("/api/event", eventRoutes);
 app.use("/api/contact", contactRoutes);
 
 app.get("/", async (req: Request, res: Response) => {
-    res.send("whatsnext: 0.0.1");
+    res.send("whatsnext: 0.1.0");
 });
 
 app.use(handle404);

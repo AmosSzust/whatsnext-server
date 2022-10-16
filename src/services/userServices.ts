@@ -29,7 +29,6 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
             return next(new AppError(false, "Invalid confirmation code", 401));
         confirmationCodes.delete(email);
         const userData: IUserDB = {
-            last_active: new Date().toISOString().substring(0, 10),
             email: email,
             password: bcrypt.hashSync(password),
             full_name: email.substring(0, email.indexOf("@")),
@@ -39,6 +38,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     }
     if (!user) return next(new AppError(false, "Please register!", 403));
     if (!bcrypt.compareSync(password, user.password)) return next(new AppError(false, "Invalid email or password", 401));
+    if (!confirmationCode) await pgClient.setLastActive(email);
     res.status(200).json({ token: signUser(email) });
 };
 
@@ -46,6 +46,13 @@ export const setUserName = async (req: Request, res: Response, next: NextFunctio
     const email = res.locals.email;
     const { full_name } = req.body;
     await pgClient.setUserName(email, full_name);
+    res.status(200).json({ result: true });
+};
+
+export const setUserBirthDate = async (req: Request, res: Response, next: NextFunction) => {
+    const email: string = res.locals.email;
+    const { birthDate } = req.body;
+    await pgClient.setUserBirthDate(email, birthDate);
     res.status(200).json({ result: true });
 };
 

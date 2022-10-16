@@ -44,9 +44,19 @@ class PGClient {
     };
 
     addContact = async (email: string, userLifeEventId: number, sharedEventsCount: number) => {
-        const query: string =
-            "insert into contacts (from_user_id, to_user_id, contact_when, shared_events_count) values ((select id from users where email=$1), (select user_id from users_life_events where id=$2), now(), $3)";
-        await this.pool.query(query, [email, userLifeEventId, sharedEventsCount]);
+        let query: string =
+            "select id from contacts where from_user_id=(select id from users where email=$1) and to_user_id=(select user_id from users_life_events where id=$2)";
+        const queryResult: QueryResult = await this.pool.query(query, [email, userLifeEventId]);
+
+        if (queryResult.rows.length === 0) {
+            query =
+                "insert into contacts (from_user_id, to_user_id, contact_when, shared_events_count) values ((select id from users where email=$1), (select user_id from users_life_events where id=$2), now(), $3)";
+            await this.pool.query(query, [email, userLifeEventId, sharedEventsCount]);
+        } else {
+            query =
+                "update contacts set contact_when=now(), shared_events_count=$1 where from_user_id=(select id from users where email=$2) and to_user_id=(select user_id from users_life_events where id=$3)";
+            await this.pool.query(query, [sharedEventsCount, email, userLifeEventId]);
+        }
     };
 
     //Users
@@ -67,6 +77,11 @@ class PGClient {
         await this.pool.query(query, [full_name, email]);
     };
 
+    setUserBirthDate = async (email: string, birthDate: string) => {
+        const query: string = "update users_life_events set event_when=$1 where user_id=(select id from users where email=$2) and event_id=1";
+        await this.pool.query(query, [birthDate, email]);
+    };
+
     getUserName = async (email: string): Promise<string> => {
         const query: string = "select full_name from users where email = $1";
         const queryResult: QueryResult = await this.pool.query(query, [email]);
@@ -75,9 +90,8 @@ class PGClient {
     };
 
     saveUser = async (userData: IUserDB, birthDate: string) => {
-        const query: string = "insert into users (" + this.buildFields(userData) + ") values (" + this.buildParams(userData) + ") RETURNING *";
-        const values: any[] = this.buildValues(userData);
-        const insertResult: QueryResult = await this.pool.query(query, values);
+        const query: string = "insert into users (full_name, password, email, last_active) values ($1,$2,$3,date(now())) RETURNING *";
+        const insertResult: QueryResult = await this.pool.query(query, [userData.full_name, userData.password, userData.email]);
         await this.pool.query("insert into users_life_events (user_id, event_id, event_when) values ($1, $2, $3)", [
             insertResult.rows[0].id,
             1,
@@ -126,28 +140,9 @@ class PGClient {
         await this.pool.query(query, [eventId]);
     };
 
-    private buildFields = (data: any): string => {
-        let fields: string = "";
-        for (let key in data) {
-            fields += "," + key;
-        }
-        return fields.substring(1);
-    };
-
-    private buildParams = (data: any): string => {
-        let params: string = "";
-        for (let i = 0; i < Object.keys(data).length; i++) {
-            params += ",$" + (i + 1);
-        }
-        return params.substring(1);
-    };
-
-    private buildValues = (data: any): any[] => {
-        let values: any[] = [];
-        for (let key in data) {
-            values.push(data[key]);
-        }
-        return values;
+    setLastActive = async (email: string) => {
+        const query: string = "update users set last_active=date(now()) where email=$1";
+        await this.pool.query(query, [email]);
     };
 }
 

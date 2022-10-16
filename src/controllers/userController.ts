@@ -13,6 +13,10 @@ export const setUserName = async (req: Request, res: Response, next: NextFunctio
     userService.setUserName(req, res, next);
 }
 
+export const setUserBirthDate = async (req: Request, res: Response, next: NextFunction) => {
+    userService.setUserBirthDate(req, res, next);
+};
+
 export const getUserName = async (req: Request, res: Response, next: NextFunction) => {
     userService.getUserName(req, res, next);
 };

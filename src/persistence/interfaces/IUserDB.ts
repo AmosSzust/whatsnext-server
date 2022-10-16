@@ -1,5 +1,4 @@
-export interface IUserDB {
-    last_active: string;
+export interface IUserDB {    
     full_name: string;
     password: string;
     email: string;
