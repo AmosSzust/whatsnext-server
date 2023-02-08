@@ -1,7 +1,7 @@
 export class AppError extends Error {
-    private _code: number;
+    private readonly _code: number;
     private _crashDate: Date;
-    private _log: boolean;
+    private readonly _log: boolean;
 
     constructor(log: boolean, message: string, code?: number) {
         super(message);

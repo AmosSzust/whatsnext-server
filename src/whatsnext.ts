@@ -11,6 +11,7 @@ import https from "https";
 import { pgClient } from "./persistence/pgClient";
 import { eventRoutes } from "./routes/eventRoutes";
 import { contactRoutes } from "./routes/contactRoutes";
+import {Server} from "http";
 
 export const confirmationCodes = new Map<string, string>();
 
@@ -32,6 +33,7 @@ app.get("/", async (req: Request, res: Response) => {
 app.use(handle404);
 app.use(errorHandler);
 
+let server: Server;
 if (process.env.DB_USER == null) {
     console.log(new Date().toISOString() + ": Can't find environment variables");
 } else if (fs.existsSync(process.env.PRIV_KEY_PATH!)) {
@@ -39,32 +41,38 @@ if (process.env.DB_USER == null) {
         key: fs.readFileSync(process.env.PRIV_KEY_PATH!),
         cert: fs.readFileSync(process.env.FULL_CHAIN_PATH!),
     };
-    https.createServer(options, app).listen(8447, () => {
+    server = https.createServer(options, app).listen(8447, () => {
         console.log(new Date().toISOString() + ": Server is runing on https at port 8447");
     });
 } else {
-    app.listen(3000, () => {
+    server = app.listen(3000, () => {
         console.log(new Date().toISOString() + ": Server is runing on http at port 3000");
     });
 }
 
+const closingStuff = (fromWhere: string) => {
+    console.log(`${new Date().toISOString()}: Closing all connections`);
+    server.closeAllConnections();
+    console.log(`${new Date().toISOString()}: Exited via ${fromWhere}`);
+};
+
 process
-    .on("unhandledRejection", async (reason, p) => {
+    .on("unhandledRejection", async (reason: Error | any, p) => {
+        console.log(`${new Date().toISOString()}: Reason: ${reason.stack ? reason.stack : reason}`);
         await pgClient.handleError(new AppError(true, `${reason}: ${p}`, 500));
-        console.log(new Date().toISOString() + ": Exited via unhandledRejection");
         process.exit(1);
     })
-    .on("uncaughtException", async (err) => {
+    .on('uncaughtException', async (err, origin) => {
+        console.log(`${new Date().toISOString()}: Error: ${err.stack ? err.stack : err}. origin: ${origin}`);
         await pgClient.handleError(new AppError(true, `uncaught exception ${err}`, 500));
-        console.log(new Date().toISOString() + ": Exited via uncaughtException");
         process.exit(1);
     })
-    .on("exit", async () => {
-        console.log(new Date().toISOString() + ": Exited via exit");
+    .on('exit', async () => {
+        closingStuff('exit');
     })
-    .on("SIGTERM", async () => {
-        console.log(new Date().toISOString() + ": Exited via sigterm");
+    .on('SIGTERM', () => {
+        closingStuff('SIGTERM');
     })
-    .on("SIGINT", async () => {
-        console.log(new Date().toISOString() + ": Exited via sigint");
+    .on('SIGINT', () => {
+        closingStuff('SIGINT');
     });

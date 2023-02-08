@@ -1,18 +1,22 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 const eventService = require("../services/eventServices");
 
-export const getEvents = (req: Request, res: Response, next: NextFunction) => {
-    eventService.getEvents(req, res, next);
+export const getEvents = async (req: Request, res: Response) => {
+    const result = await eventService.getEvents(req, res);
+    return res.status(200).json(result);
 };
 
-export const getAllEvents = (req: Request, res: Response, next: NextFunction) => {
-    eventService.getAllEvents(req, res, next);
+export const getAllEvents = async (req: Request, res: Response) => {
+    const result = await eventService.getAllEvents();
+    return res.status(200).json(result);
 };
 
-export const addNewEvent = (req: Request, res: Response, next: NextFunction) => {
-    eventService.addNewEvent(req, res, next);
+export const addNewEvent = async (req: Request, res: Response) => {
+    const result = await eventService.addNewEvent(req, res);
+    return res.status(200).json(result);
 };
 
-export const deleteEvent = (req: Request, res: Response, next: NextFunction) => {
-    eventService.deleteEvent(req, res, next);
+export const deleteEvent = async (req: Request, res: Response) => {
+    const result = await eventService.deleteEvent(req);
+    return res.status(200).json(result);
 };

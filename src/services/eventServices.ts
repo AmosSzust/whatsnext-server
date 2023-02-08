@@ -1,26 +1,26 @@
-import { NextFunction, Response, Request } from "express";
+import { Response, Request } from "express";
 import { IEvent } from "../persistence/interfaces/IEvent";
 import { pgClient } from "../persistence/pgClient";
 
-export const getEvents = async (req: Request, res: Response, next: NextFunction) => {
+export const getEvents = async (req: Request, res: Response) => {
     const email: string = res.locals.email;
-    res.status(200).json(await pgClient.getUserEvents(email));
+    return await pgClient.getUserEvents(email);
 };
 
-export const getAllEvents = async (req: Request, res: Response, next: NextFunction) => {
-    res.status(200).json(await pgClient.getAllEvents());
+export const getAllEvents = async () => {
+    return await pgClient.getAllEvents();
 };
 
-export const addNewEvent = async (req: Request, res: Response, next: NextFunction) => {
+export const addNewEvent = async (req: Request, res: Response) => {
     const eventToAdd: IEvent = JSON.parse(JSON.stringify(req.body)) as IEvent;
     const email: string = res.locals.email;
 
     await pgClient.addEventToUser(eventToAdd, email);
-    res.status(200).json({ result: true });
+    return { result: true };
 };
 
-export const deleteEvent = async (req: Request, res: Response, next: NextFunction) => {
+export const deleteEvent = async (req: Request) => {
     const eventId: number = parseInt(req.params.eventId);
     await pgClient.deleteEvent(eventId);
-    res.status(200).json({ result: true });
+    return { result: true };
 };

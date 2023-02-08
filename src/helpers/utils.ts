@@ -3,12 +3,18 @@ import nodeMailer from "nodemailer";
 import jwt, { VerifyErrors } from "jsonwebtoken";
 import { AppError } from "./AppError";
 
-export const mailing = async (emailTo: string, confirmationCode: string, next: NextFunction) => {
+export const mailing = async (emailTo: string, theContent: string) => {
     const transport = nodeMailer.createTransport({
-        service: process.env.EMAIL_SERVICE,
+        host: process.env.EMAIL_SERVICE,
+        port: parseInt(process.env.EMAIL_PORT!),
+        secure: false,
         auth: {
             user: process.env.EMAIL_USER,
             pass: process.env.EMAIL_PASSWORD,
+        },
+        tls: {
+            ciphers: 'SSLv3',
+            rejectUnauthorized: false,
         },
     });
 
@@ -16,11 +22,9 @@ export const mailing = async (emailTo: string, confirmationCode: string, next: N
         from: process.env.EMAIL_USER,
         to: emailTo,
         subject: "Confirmation code for WhatsNext",
-        text: `Thank you for registering, here's your code: ${confirmationCode}`,
+        text: theContent,
     };
-
-    const resp = await transport.sendMail(options);
-    if (resp.rejected.length > 0) return next(new AppError(false, `Failed to send an email to ${emailTo}`, 500));
+    await transport.sendMail(options);
 };
 
 export const validateEmail = (email: string) => {

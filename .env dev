@@ -2,6 +2,7 @@ JWT_SECRET=value
 EMAIL_PASSWORD=value
 EMAIL_USER=value
 EMAIL_SERVICE=value
+EMAIL_PORT=value
 DB_USER=value
 DB_HOST=value
 DB_DATABASE=whatsnext
