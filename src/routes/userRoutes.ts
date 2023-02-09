@@ -1,7 +1,7 @@
-import express from 'express';
+import express from "express";
 
 export const userRoutes = express.Router();
-const userController = require('../controllers/userController');
+const userController = require("../controllers/userController");
 
 userRoutes.post("/login", userController.login);
 userRoutes.post("/register", userController.register);

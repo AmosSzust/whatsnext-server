@@ -1,4 +1,4 @@
 export enum SearchBasedOnEnum {
-  YEAR = 'year',
-  AGE = 'age',
+  YEAR = "year",
+  AGE = "age",
 }
