@@ -1,9 +1,8 @@
 import { randomUUID } from "crypto";
 import { confirmationCodes } from "../whatsnext";
-import { mailing } from "../helpers/utils";
+import { mailing, signUser } from "../helpers/utils";
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
-import { signUser } from "../helpers/utils";
 import { IUserDB } from "../persistence/interfaces/IUserDB";
 import { pgClient } from "../persistence/pgClient";
 import { SearchBasedOnEnum } from "../persistence/enums/SearchBasedOnEnum";
@@ -68,8 +67,7 @@ export const setUserBirthDate = async (req: Request, res: Response) => {
 
 export const getUserName = async (req: Request, res: Response) => {
   const email = res.locals.email;
-  const full_name: string = await pgClient.getUserName(email);
-  return { full_name: full_name };
+  return await pgClient.getUserName(email);
 };
 
 export const getSimilar = async (req: Request, res: Response) => {
