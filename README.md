@@ -19,8 +19,7 @@ You have a file called **.env** with several variables for you to define, for ex
 
 The server side is developed using NodeJS (Typescript).
 
-Feel free to contribute in any way you like. If you have an idea but you're only familiar with the client or server side, please share this idea with me and we'll coordinate the development together.
-You can see several ideas to start with: https://github.com/AmosSzust/whatsnext-server/discussions/1
+Feel free to contribute in any way you like. If you're only familiar with the client or server side, please share this idea with me to coordinate the development together. Several ideas to start with: https://github.com/AmosSzust/whatsnext-server/discussions/1
 
 The client side of WhatsNext can be found here: https://github.com/AmosSzust/whatsnext-client
 
