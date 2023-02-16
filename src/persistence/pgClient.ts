@@ -6,10 +6,14 @@ import { ILifeEvent } from "./interfaces/ILifeEvent";
 import { SearchBasedOnEnum } from "./enums/SearchBasedOnEnum";
 import { IContact } from "./interfaces/IContact";
 
+const pg = require("pg");
+
 class PGClient {
   private pool: Pool;
-
   constructor() {
+    pg.types.setTypeParser(1114, (stringValue: string) => {
+      return new Date(`${stringValue}+0000`);
+    });
     this.pool = new Pool({
       user: process.env.DB_USER,
       host: process.env.DB_HOST,
