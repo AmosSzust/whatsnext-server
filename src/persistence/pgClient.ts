@@ -117,7 +117,7 @@ class PGClient {
       userData.email,
     ]);
     await this.pool.query(
-      "insert into users_life_events (user_id, event_id, event_when) values ($1, $2, $3)",
+      "insert into users_life_events (user_id, event_id, event_when, private) values ($1, $2, $3, false)",
       [insertResult.rows[0].id, 1, new Date(birthDate)]
     );
   };
@@ -167,11 +167,12 @@ class PGClient {
 
   addEventToUser = async (eventToAdd: IEvent, email: string) => {
     const query: string =
-      "insert into users_life_events (user_id, event_id, description, event_when) select id, $1, $2, $3 from users where email = $4";
+      "insert into users_life_events (user_id, event_id, description, event_when, private) select id, $1, $2, $3, $4 from users where email = $5";
     await this.pool.query(query, [
       eventToAdd.id,
       eventToAdd.description,
       eventToAdd.event_when,
+      eventToAdd.private,
       email,
     ]);
   };
