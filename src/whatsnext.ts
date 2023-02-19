@@ -47,13 +47,13 @@ if (process.env.DB_USER == null) {
   };
   server = https.createServer(options, app).listen(8447, () => {
     console.log(
-      new Date().toISOString() + ": Server is runing on https at port 8447"
+      new Date().toISOString() + ": Server is running on https at port 8447"
     );
   });
 } else {
   server = app.listen(3000, () => {
     console.log(
-      new Date().toISOString() + ": Server is runing on http at port 3000"
+      new Date().toISOString() + ": Server is running on http at port 3000"
     );
   });
 }

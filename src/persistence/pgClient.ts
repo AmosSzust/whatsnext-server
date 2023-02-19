@@ -22,6 +22,10 @@ class PGClient {
       port: parseInt(process.env.DB_PORT!),
       ssl: process.env.DB_SSL === "true",
     });
+    this.pool.on("error", (err) => {
+      console.error("Unexpected error with the database: ", err);
+      this.pool.end().then(() => process.exit(-1));
+    });
   }
 
   //General

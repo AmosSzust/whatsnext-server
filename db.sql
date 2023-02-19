@@ -18,13 +18,13 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
-DROP DATABASE whatsnext;
+-- DROP DATABASE whatsnext;
 --
 -- TOC entry 3360 (class 1262 OID 16402)
 -- Name: whatsnext; Type: DATABASE; Schema: -; Owner: postgres
 --
 
-CREATE DATABASE whatsnext WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE = 'English_United States.1252';
+CREATE DATABASE whatsnext WITH TEMPLATE = template0 ENCODING = 'UTF8';
 
 
 ALTER DATABASE whatsnext OWNER TO postgres;
